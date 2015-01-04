@@ -17,7 +17,7 @@ import dk.dma.enav.model.geometry.Position;
 public class Main {
 
 	public static BufferedWriter fileWriter;
-	public static String outputFileName = "ais_output.txt";
+	public static String outputFileName = "c:\\master_data\\ais_output.txt";
 	public static int msgCounter = 0;
 	
 	public static void main(String[] args) throws Exception {
@@ -46,13 +46,13 @@ public class Main {
 				    	outputRecord = outputRecord + "," + String.valueOf(lat);
 				    	double lon = aisMessage.getValidPosition().getLongitude();
 				    	outputRecord = outputRecord + "," + String.valueOf(lon);
+			    	    try {
+							fileWriter.write(outputRecord);
+							fileWriter.newLine();
+						} catch (IOException e) {
+							System.err.println("Cannot write "+ outputRecord +" to " + outputFileName);
+						}
 			    	}
-		    	    try {
-						fileWriter.write(outputRecord);
-						fileWriter.newLine();
-					} catch (IOException e) {
-						System.err.println("Cannot write "+ outputRecord +" to " + outputFileName);
-					}
 		    	}
 		    	
 		    	if(msgCounter % 1000 == 0) {
